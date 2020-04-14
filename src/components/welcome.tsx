@@ -7,7 +7,8 @@ interface IWelcomeState {
     firstName: string,
     lastName: string,
     userName: string,
-    password: string
+    password: string,
+    login: string
 }
 
 export default class Welcome extends React.Component<IWelcomeProps, IWelcomeState> {
@@ -17,47 +18,37 @@ export default class Welcome extends React.Component<IWelcomeProps, IWelcomeStat
             firstName: "Dwayne",
             lastName: "Jones",
             userName: "",
-            password: ""
+            password: "",
+            login: "login"
         }
     }
-    updateWelcome = ( event: any ) => {
-        event.preventDefault();
+updateWelcome = ( event: any ) => {
+    event.preventDefault();
 
-        const userNameString: string = "olaleye";
-        const passwordString: string = "xxxx";
+    let userNameString: string = "olaleye";
+    let passwordString: string = "xxxx";
         
-        const inputUserName: HTMLInputElement | null = document.querySelector( '[name="userName"]' );
-        const inputPassword: HTMLInputElement | null = document.querySelector( '[name="password"]' );
-
-        if ( inputUserName?.value === userNameString && inputPassword?.value === passwordString ) {
-            // correct logic
-            
-        } else {
-            // incorrect logic
-            this.setState( {
-                    userName: "incorrect username",
-                    password: "incorrect details" 
-
-                   } );
-                }
-            }
-            
-        
-        // userNameString = '';
-        // else
-        //     userNameString = userName.value;
-
-        // if ( password === null )
-        //     passwordString = '';
-        // else
-        //     passwordString = password.value;
-
-        // this.setState( {
-        //     userName: userNameString,
-        //     password: passwordString
-        //    } );
-        // }
+    const inputUserName: HTMLInputElement | null = document.querySelector( '[name="userName"]' );
+    const inputPassword: HTMLInputElement | null = document.querySelector( '[name="password"]' );
+    const inputFirstName: HTMLInputElement | null = document.querySelector( '[name="firstName"]' );
     
+    if ( inputUserName?.value === userNameString && inputPassword?.value === passwordString ) {
+            // correct logic
+            this.setState({
+                firstName: inputFirstName?.value + ' welcome!',
+                lastName: "",
+                login: "logout"
+            })
+
+    } else {
+        // incorrect logic
+        console.log(inputUserName?.value, inputPassword?.value)
+        this.setState( {
+            userName: "incorrect username",
+            password: "incorrect details" 
+        } );
+    }
+}
     render() {
         return (
             <div className="forms">
@@ -71,10 +62,10 @@ export default class Welcome extends React.Component<IWelcomeProps, IWelcomeStat
                     <label htmlFor="lastName">lastName:</label>
                     <input type="text" name="lastName" defaultValue={this.state.lastName} />
                     <label htmlFor="username">username:</label>
-                    <input type="text" name="username" defaultValue={this.state.userName} />
+                    <input type="text" name="userName" defaultValue={this.state.userName} />
                     <label htmlFor="password">password:</label>
                     <input type="password" name="password" defaultValue={this.state.password} />
-                    <input type="submit" value="Login" />
+                    <input type="submit" value={this.state.login} />
                 </form>
             </div>
         );
