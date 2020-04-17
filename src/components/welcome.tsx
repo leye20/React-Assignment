@@ -1,6 +1,8 @@
 import React from 'react';
+import Input from '../components/input';
 
 export interface IWelcomeProps {
+    name: string
 }
 
 interface IWelcomeState {
@@ -12,11 +14,11 @@ interface IWelcomeState {
 }
 
 export default class Welcome extends React.Component<IWelcomeProps, IWelcomeState> {
-    constructor ( props: string ) {
+    constructor ( props: IWelcomeProps ) {
         super(props);
         this.state = {
-            firstName: "Dwayne",
-            lastName: "Jones",
+            firstName: this.props.name,
+            lastName: "",
             userName: "",
             password: "",
             login: "login"
@@ -32,6 +34,8 @@ updateWelcome = ( event: any ) => {
     const inputPassword: HTMLInputElement | null = document.querySelector( '[name="password"]' );
     const inputFirstName: HTMLInputElement | null = document.querySelector( '[name="firstName"]' );
     
+    if ( this.state.login === 'login') {
+
     if ( inputUserName?.value === userNameString && inputPassword?.value === passwordString ) {
             // correct logic
             this.setState({
@@ -49,6 +53,12 @@ updateWelcome = ( event: any ) => {
         } );
     }
 }
+else {
+    this.setState({
+        login: "logged Out"
+    });
+}
+}
     render() {
         return (
             <div className="forms">
@@ -58,6 +68,7 @@ updateWelcome = ( event: any ) => {
                 <form onSubmit={this.updateWelcome}>
                     <h3>Welcome!</h3>
                     <label htmlFor="firstName">firstName:</label>
+                    <Input />
                     <input type="text" name="firstName" defaultValue={this.state.firstName} />
                     <label htmlFor="lastName">lastName:</label>
                     <input type="text" name="lastName" defaultValue={this.state.lastName} />
